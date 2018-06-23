@@ -19,12 +19,12 @@ Year,Match date,Stage,Stadium,Home Team Name,Home Team Goals,Away Team Goals,Awa
 2018,20/06/2018 15:00,2,"Luzhniki Stadium, Moscow",Portugal,1,0,Morocco,Group B
 2018,20/06/2018 18:00,2,Rostov-on-Don Stadium,Uruguay,1,0,Saudi Arabia,Group A
 2018,20/06/2018 21:00,2,Kazan Arena,Iran,0,1,Spain,Group B
-2018,21/06/2018 15:00,2,Samara Stadium,Denmark,,,Australia,Group C
-2018,21/06/2018 18:00,2,Ekaterinburg Stadium,France,,,Peru,Group C
-2018,21/06/2018 21:00,2,Nizhny Novgorod Stadium,Argentina,,,Croatia,Group D
-2018,22/06/2018 15:00,2,Saint Petersburg Stadium,Brazil,,,Costa Rica,Group E
-2018,22/06/2018 18:00,2,Volgograd Stadium,Nigeria,,,Iceland,Group D
-2018,22/06/2018 21:00,2,Kaliningrad Stadium,Serbia,,,Switzerland,Group E
+2018,21/06/2018 15:00,2,Samara Stadium,Denmark,1,1,Australia,Group C
+2018,21/06/2018 18:00,2,Ekaterinburg Stadium,France,1,0,Peru,Group C
+2018,21/06/2018 21:00,2,Nizhny Novgorod Stadium,Argentina,0,3,Croatia,Group D
+2018,22/06/2018 15:00,2,Saint Petersburg Stadium,Brazil,2,0,Costa Rica,Group E
+2018,22/06/2018 18:00,2,Volgograd Stadium,Nigeria,2,0,Iceland,Group D
+2018,22/06/2018 21:00,2,Kaliningrad Stadium,Serbia,1,2,Switzerland,Group E
 2018,23/06/2018 15:00,2,"Otkrytiye Arena, Moscow",Belgium,,,Tunisia,Group G
 2018,23/06/2018 18:00,2,Rostov-on-Don Stadium,Korea Republic,,,Mexico,Group F
 2018,23/06/2018 21:00,2,"Fisht Stadium, Sochi",Germany,,,Sweden,Group F
