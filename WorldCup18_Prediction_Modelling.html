@@ -11776,11 +11776,11 @@ div#notebook {
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <h1 id="World-Cup-2018-Prediction-by-Ang-Peng-Seng"><strong>World Cup 2018 Prediction by Ang Peng Seng</strong><a class="anchor-link" href="#World-Cup-2018-Prediction-by-Ang-Peng-Seng">&#182;</a></h1><p>The purpose of this is to try and predict the top 3 teams for World Cup 2018 using classification models coupled with poisson distribution to predict the exact results of the semi-finals, third place playoff and final.</p>
-<h2 id="Final-Predictions-based-on-this-notebook:"><strong>Final Predictions based on this notebook:</strong><a class="anchor-link" href="#Final-Predictions-based-on-this-notebook:">&#182;</a></h2><p><strong>Winner</strong>: Brazil</p>
+<h2 id="Final-Predictions-based-on-this-notebook:"><strong>Final Predictions based on this notebook:</strong><a class="anchor-link" href="#Final-Predictions-based-on-this-notebook:">&#182;</a></h2><p><strong>Winner</strong>: Germany</p>
 <p><strong>2nd Place</strong>: Spain</p>
 <p><strong>3rd Place</strong>: France</p>
-<p><strong>Final Score</strong>: Brazil VS Spain: 2-1</p>
-<p><strong>Third place playoff score</strong>: France vs Belgium: 1-1 (France win Penalty Shootout)</p>
+<p><strong>Final Score</strong>: Germany VS Spain: 2-1</p>
+<p><strong>Third place playoff score</strong>: France vs England: 1-1 (France win Penalty Shootout)</p>
 <h2 id="Contents:"><strong>Contents:</strong><a class="anchor-link" href="#Contents:">&#182;</a></h2><p><strong>1. Import Necessary Packages/Datasets</strong></p>
 <p><strong>2. Data Cleaning</strong></p>
 <p><strong>3. Classification Models to predict match results (Win/Draw/Lose)</strong></p>
@@ -11971,13 +11971,14 @@ div#notebook {
 <div class="prompt input_prompt">In&nbsp;[5]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">results_so_far</span><span class="p">[</span><span class="s2">&quot;Result&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">results_so_far</span><span class="p">[</span><span class="s2">&quot;Home Team Goals&quot;</span><span class="p">]</span> <span class="o">&lt;</span> <span class="n">results_so_far</span><span class="p">[</span><span class="s2">&quot;Away Team Goals&quot;</span><span class="p">],</span> <span class="mi">0</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">results_so_far</span><span class="p">[</span><span class="s2">&quot;Home Team Goals&quot;</span><span class="p">]</span><span class="o">==</span><span class="n">results_so_far</span><span class="p">[</span><span class="s2">&quot;Away Team Goals&quot;</span><span class="p">],</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">))</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">results_so_far</span> <span class="o">=</span> <span class="n">results_so_far</span><span class="o">.</span><span class="n">replace</span><span class="p">({</span><span class="s2">&quot;Korea Republic&quot;</span><span class="p">:</span><span class="s2">&quot;South Korea&quot;</span><span class="p">})</span>
+<span class="n">results_so_far</span><span class="p">[</span><span class="s2">&quot;Result&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">results_so_far</span><span class="p">[</span><span class="s2">&quot;Home Team Goals&quot;</span><span class="p">]</span> <span class="o">&lt;</span> <span class="n">results_so_far</span><span class="p">[</span><span class="s2">&quot;Away Team Goals&quot;</span><span class="p">],</span> <span class="mi">0</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">results_so_far</span><span class="p">[</span><span class="s2">&quot;Home Team Goals&quot;</span><span class="p">]</span><span class="o">==</span><span class="n">results_so_far</span><span class="p">[</span><span class="s2">&quot;Away Team Goals&quot;</span><span class="p">],</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">))</span>
 <span class="n">results_so_far</span><span class="p">[</span><span class="s2">&quot;Matches&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">results_so_far</span><span class="p">[</span><span class="s2">&quot;Home Team Name&quot;</span><span class="p">]</span> <span class="o">+</span> <span class="s2">&quot;,&quot;</span> <span class="o">+</span> <span class="n">results_so_far</span><span class="p">[</span><span class="s2">&quot;Away Team Name&quot;</span><span class="p">]</span>
 <span class="n">results_so_far</span> <span class="o">=</span> <span class="n">results_so_far</span><span class="o">.</span><span class="n">dropna</span><span class="p">(</span><span class="n">how</span><span class="o">=</span><span class="s2">&quot;any&quot;</span><span class="p">)</span>
 <span class="n">results_so_far</span> <span class="o">=</span> <span class="n">results_so_far</span><span class="o">.</span><span class="n">drop</span><span class="p">([</span><span class="s2">&quot;Year&quot;</span><span class="p">,</span><span class="s2">&quot;Match date&quot;</span><span class="p">,</span><span class="s2">&quot;Stage&quot;</span><span class="p">,</span><span class="s2">&quot;Stadium&quot;</span><span class="p">,</span><span class="s2">&quot;Group&quot;</span><span class="p">],</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
 <span class="n">results_so_far</span><span class="p">[</span><span class="s2">&quot;Home Team Goals&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">results_so_far</span><span class="p">[</span><span class="s2">&quot;Home Team Goals&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="nb">int</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>
 <span class="n">results_so_far</span><span class="p">[</span><span class="s2">&quot;Away Team Goals&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">results_so_far</span><span class="p">[</span><span class="s2">&quot;Away Team Goals&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="nb">int</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>
-<span class="n">results_so_far</span><span class="o">.</span><span class="n">tail</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+<span class="n">results_so_far</span><span class="o">.</span><span class="n">tail</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
 </pre></div>
 
 </div>
@@ -12023,31 +12024,22 @@ div#notebook {
   </thead>
   <tbody>
     <tr>
-      <th>23</th>
-      <td>Brazil</td>
-      <td>2</td>
-      <td>0</td>
-      <td>Costa Rica</td>
-      <td>2</td>
-      <td>Brazil,Costa Rica</td>
-    </tr>
-    <tr>
-      <th>24</th>
-      <td>Nigeria</td>
-      <td>2</td>
-      <td>0</td>
-      <td>Iceland</td>
-      <td>2</td>
-      <td>Nigeria,Iceland</td>
-    </tr>
-    <tr>
-      <th>25</th>
-      <td>Serbia</td>
+      <th>27</th>
+      <td>South Korea</td>
       <td>1</td>
       <td>2</td>
-      <td>Switzerland</td>
+      <td>Mexico</td>
       <td>0</td>
-      <td>Serbia,Switzerland</td>
+      <td>South Korea,Mexico</td>
+    </tr>
+    <tr>
+      <th>28</th>
+      <td>Germany</td>
+      <td>2</td>
+      <td>1</td>
+      <td>Sweden</td>
+      <td>2</td>
+      <td>Germany,Sweden</td>
     </tr>
   </tbody>
 </table>
@@ -13384,7 +13376,7 @@ Test F1 Score: 0.48
 
 
 <div class="output_text output_subarea output_execute_result">
-<pre>&lt;matplotlib.axes._subplots.AxesSubplot at 0x7f56f47777b8&gt;</pre>
+<pre>&lt;matplotlib.axes._subplots.AxesSubplot at 0x7fecd1ca6e48&gt;</pre>
 </div>
 
 </div>
@@ -16282,6 +16274,27 @@ Test F1 Score: 0.22
                 <span class="n">world_cup</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">home</span><span class="p">,</span> <span class="s1">&#39;points&#39;</span><span class="p">]</span> <span class="o">+=</span> <span class="mi">3</span>
                 <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">{}</span><span class="s2"> wins &quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">home</span><span class="p">))</span>
                 <span class="k">continue</span>
+        <span class="k">elif</span> <span class="p">(</span><span class="n">away</span> <span class="o">+</span> <span class="s2">&quot;,&quot;</span> <span class="o">+</span> <span class="n">home</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">list</span><span class="p">(</span><span class="n">results_so_far</span><span class="p">[</span><span class="s2">&quot;Matches&quot;</span><span class="p">]):</span>
+            <span class="n">real_result</span> <span class="o">=</span> <span class="n">results_so_far</span><span class="p">[</span><span class="n">results_so_far</span><span class="p">[</span><span class="s2">&quot;Matches&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="p">(</span><span class="n">away</span> <span class="o">+</span> <span class="s2">&quot;,&quot;</span> <span class="o">+</span> <span class="n">home</span><span class="p">)]</span>
+            <span class="n">real_result</span><span class="o">.</span><span class="n">reset_index</span><span class="p">(</span><span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span><span class="n">drop</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+            <span class="n">real_result</span> <span class="o">=</span> <span class="n">real_result</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="s2">&quot;Result&quot;</span><span class="p">]</span>
+            <span class="n">world_cup</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">home</span><span class="p">,</span> <span class="s1">&#39;total_prob&#39;</span><span class="p">]</span> <span class="o">+=</span> <span class="mi">1</span>
+            <span class="n">world_cup</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">away</span><span class="p">,</span> <span class="s1">&#39;total_prob&#39;</span><span class="p">]</span> <span class="o">+=</span> <span class="mi">1</span>
+            <span class="k">if</span> <span class="n">real_result</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">{}</span><span class="s2"> wins &quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">home</span><span class="p">))</span>
+                <span class="n">world_cup</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">home</span><span class="p">,</span> <span class="s1">&#39;points&#39;</span><span class="p">]</span> <span class="o">+=</span> <span class="mi">3</span>
+                <span class="k">continue</span>
+            <span class="k">elif</span> <span class="n">real_result</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+                <span class="n">points</span> <span class="o">=</span> <span class="mi">1</span>
+                <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Draw&quot;</span><span class="p">)</span>
+                <span class="n">world_cup</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">home</span><span class="p">,</span> <span class="s1">&#39;points&#39;</span><span class="p">]</span> <span class="o">+=</span> <span class="mi">1</span>
+                <span class="n">world_cup</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">away</span><span class="p">,</span> <span class="s1">&#39;points&#39;</span><span class="p">]</span> <span class="o">+=</span> <span class="mi">1</span>
+                <span class="k">continue</span>
+            <span class="k">elif</span> <span class="n">real_result</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
+                <span class="n">points</span> <span class="o">=</span> <span class="mi">3</span>
+                <span class="n">world_cup</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">away</span><span class="p">,</span> <span class="s1">&#39;points&#39;</span><span class="p">]</span> <span class="o">+=</span> <span class="mi">3</span>
+                <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">{}</span><span class="s2"> wins &quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">away</span><span class="p">))</span>
+                <span class="k">continue</span>
         
         
         <span class="n">row</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="n">np</span><span class="o">.</span><span class="n">nan</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span><span class="p">,</span><span class="n">np</span><span class="o">.</span><span class="n">nan</span><span class="p">,</span><span class="n">np</span><span class="o">.</span><span class="n">nan</span><span class="p">]]),</span> <span class="n">columns</span><span class="o">=</span><span class="n">x_test</span><span class="o">.</span><span class="n">columns</span><span class="p">)</span>
@@ -16309,7 +16322,7 @@ Test F1 Score: 0.22
             <span class="n">world_cup</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">away</span><span class="p">,</span> <span class="s1">&#39;total_prob&#39;</span><span class="p">]</span> <span class="o">+=</span> <span class="n">away_win_prob</span>
         <span class="k">if</span> <span class="nb">max</span><span class="p">(</span><span class="n">home_win_prob</span><span class="p">,</span><span class="n">away_win_prob</span><span class="p">,</span><span class="n">draw_prob</span><span class="p">)</span> <span class="o">==</span> <span class="n">draw_prob</span><span class="p">:</span>
             <span class="n">points</span> <span class="o">=</span> <span class="mi">1</span>
-            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Draw&quot;</span><span class="p">)</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Draw with probability of </span><span class="si">{:.2f}</span><span class="s2">%&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">draw_prob</span><span class="p">))</span>
             <span class="n">world_cup</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">home</span><span class="p">,</span> <span class="s1">&#39;points&#39;</span><span class="p">]</span> <span class="o">+=</span> <span class="mi">1</span>
             <span class="n">world_cup</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">away</span><span class="p">,</span> <span class="s1">&#39;points&#39;</span><span class="p">]</span> <span class="o">+=</span> <span class="mi">1</span>
             <span class="n">world_cup</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">home</span><span class="p">,</span> <span class="s1">&#39;total_prob&#39;</span><span class="p">]</span> <span class="o">+=</span> <span class="n">draw_prob</span>
@@ -16336,13 +16349,20 @@ Test F1 Score: 0.22
 
 
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>___Starting group F:___
+<pre>___Starting group C:___
+France vs. Australia: France wins 
+France vs. Peru: France wins 
+France vs. Denmark: Draw with probability of 0.65%
+Australia vs. Peru: Draw with probability of 0.42%
+Australia vs. Denmark: Draw
+Peru vs. Denmark: Denmark wins 
+___Starting group F:___
 Germany vs. Mexico: Mexico wins 
-Germany vs. Sweden: Sweden wins with a probability of 0.38% 
+Germany vs. Sweden: Germany wins 
 Germany vs. South Korea: Germany wins with a probability of 0.75%
 Mexico vs. Sweden: Mexico wins with a probability of 0.74%
-Mexico vs. South Korea: Mexico wins with a probability of 0.58%
-Sweden vs. South Korea: Sweden wins with a probability of 0.83%
+Mexico vs. South Korea: Mexico wins 
+Sweden vs. South Korea: Sweden wins 
 ___Starting group H:___
 Poland vs. Senegal: Senegal wins 
 Poland vs. Colombia: Poland wins with a probability of 0.49%
@@ -16350,48 +16370,41 @@ Poland vs. Japan: Poland wins with a probability of 0.66%
 Senegal vs. Colombia: Colombia wins with a probability of 0.63% 
 Senegal vs. Japan: Senegal wins with a probability of 0.42%
 Colombia vs. Japan: Japan wins 
+___Starting group A:___
+Russia vs. Saudi Arabia: Russia wins 
+Russia vs. Egypt: Russia wins 
+Russia vs. Uruguay: Draw with probability of 0.66%
+Saudi Arabia vs. Egypt: Egypt wins with a probability of 0.72% 
+Saudi Arabia vs. Uruguay: Uruguay wins 
+Egypt vs. Uruguay: Uruguay wins 
 ___Starting group D:___
 Argentina vs. Iceland: Draw
 Argentina vs. Croatia: Croatia wins 
 Argentina vs. Nigeria: Nigeria wins with a probability of 0.50% 
 Iceland vs. Croatia: Iceland wins with a probability of 0.34%
-Iceland vs. Nigeria: Iceland wins with a probability of 0.53%
+Iceland vs. Nigeria: Nigeria wins 
 Croatia vs. Nigeria: Croatia wins 
-___Starting group A:___
-Russia vs. Saudi Arabia: Russia wins 
-Russia vs. Egypt: Russia wins 
-Russia vs. Uruguay: Draw
-Saudi Arabia vs. Egypt: Egypt wins with a probability of 0.72% 
-Saudi Arabia vs. Uruguay: Uruguay wins with a probability of 0.69% 
-Egypt vs. Uruguay: Uruguay wins 
-___Starting group E:___
-Brazil vs. Switzerland: Draw
-Brazil vs. Costa Rica: Brazil wins 
-Brazil vs. Serbia: Brazil wins with a probability of 0.83%
-Switzerland vs. Costa Rica: Switzerland wins with a probability of 0.77%
-Switzerland vs. Serbia: Switzerland wins with a probability of 0.71%
-Costa Rica vs. Serbia: Serbia wins 
-___Starting group G:___
-Belgium vs. Panama: Belgium wins 
-Belgium vs. Tunisia: Belgium wins with a probability of 0.52%
-Belgium vs. England: Draw
-Panama vs. Tunisia: Tunisia wins with a probability of 0.85% 
-Panama vs. England: England wins with a probability of 0.89% 
-Tunisia vs. England: England wins 
-___Starting group C:___
-France vs. Australia: France wins 
-France vs. Peru: France wins 
-France vs. Denmark: Draw
-Australia vs. Peru: Draw
-Australia vs. Denmark: Denmark wins with a probability of 0.84% 
-Peru vs. Denmark: Denmark wins 
 ___Starting group B:___
 Portugal vs. Spain: Draw
 Portugal vs. Morocco: Portugal wins 
 Portugal vs. Iran: Portugal wins with a probability of 0.41%
 Spain vs. Morocco: Spain wins with a probability of 0.83%
-Spain vs. Iran: Spain wins with a probability of 0.68%
+Spain vs. Iran: Spain wins 
 Morocco vs. Iran: Iran wins 
+___Starting group E:___
+Brazil vs. Switzerland: Draw
+Brazil vs. Costa Rica: Brazil wins 
+Brazil vs. Serbia: Brazil wins with a probability of 0.83%
+Switzerland vs. Costa Rica: Switzerland wins with a probability of 0.77%
+Switzerland vs. Serbia: Switzerland wins 
+Costa Rica vs. Serbia: Serbia wins 
+___Starting group G:___
+Belgium vs. Panama: Belgium wins 
+Belgium vs. Tunisia: Belgium wins 
+Belgium vs. England: Draw with probability of 0.64%
+Panama vs. Tunisia: Tunisia wins with a probability of 0.85% 
+Panama vs. England: England wins with a probability of 0.89% 
+Tunisia vs. England: England wins 
 </pre>
 </div>
 </div>
@@ -16522,29 +16535,29 @@ Russia vs. Portugal: Portugal wins Russia with score of 2:1
 
 France vs. Croatia: France wins Croatia with score of 2:0
 
-Brazil vs. Sweden: Brazil wins Sweden with score of 2:0
+Brazil vs. Germany: Germany wins Brazil with score of 2:1
 
-England vs. Senegal: England wins Senegal with score of 2:0
+Belgium vs. Senegal: Belgium wins Senegal with score of 2:0
 
 Uruguay vs. Spain: Spain wins Uruguay with score of 2:0
 
-Denmark vs. Iceland: Denmark wins Iceland with score of 2:0
+Denmark vs. Nigeria: Denmark wins Nigeria with score of 2:1
 
-Switzerland vs. Mexico: Switzerland draws with Mexico with a score of 1:1 after extra time and Switzerland wins the penalty shootout
+Switzerland vs. Mexico: Switzerland draws with Mexico with a score of 1:1 after extra time and Mexico wins the penalty shootout
 
 
-Belgium vs. Poland: Belgium wins Poland with score of 2:0
+England vs. Poland: England wins Poland with score of 2:0
 
 ___Starting of the quarterfinal___
 Portugal vs. France: France wins Portugal with score of 2:1
 
-Brazil vs. England: Brazil wins England with score of 2:0
+Germany vs. Belgium: Germany wins Belgium with score of 2:0
 
 Spain vs. Denmark: Spain wins Denmark with score of 2:0
 
-Switzerland vs. Belgium: Belgium wins Switzerland with score of 2:1
+Mexico vs. England: England wins Mexico with score of 2:0
 
-Top 4: France,Brazil,Spain,Belgium
+Top 4: France,Germany,Spain,England
 </pre>
 </div>
 </div>
@@ -16563,7 +16576,7 @@ Top 4: France,Brazil,Spain,Belgium
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[50]:</div>
+<div class="prompt input_prompt">In&nbsp;[56]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">home_sides</span> <span class="o">=</span> <span class="n">winners</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">3</span><span class="p">:</span><span class="mi">2</span><span class="p">]</span>
@@ -16757,17 +16770,17 @@ Top 4: France,Brazil,Spain,Belgium
 
 <div class="output_subarea output_stream output_stdout output_text">
 <pre>__Starting of the Semifinal__
-France vs. Brazil: Brazil wins France with score of 2:1
+France vs. Germany: Germany wins France with score of 2:1
 
-Spain vs. Belgium: Spain draws with Belgium with a score of 1:1 after extra time and Spain wins the penalty shootout
+Spain vs. England: Spain draws with England with a score of 1:1 after extra time and Spain wins the penalty shootout
 
 
 __Third place playoff__
-France vs. Belgium: France draws with Belgium with a score of 1:1 after extra time and France wins the penalty shootout
+France vs. England: France draws with England with a score of 1:1 after extra time and France wins the penalty shootout
 
 
 __World Cup Final__
-Brazil vs. Spain: Brazil wins Spain with score of 2:1</pre>
+Germany vs. Spain: Germany wins Spain with score of 2:1</pre>
 </div>
 </div>
 
@@ -16787,11 +16800,11 @@ Brazil vs. Spain: Brazil wins Spain with score of 2:1</pre>
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Final-Predictions:"><strong>Final Predictions:</strong><a class="anchor-link" href="#Final-Predictions:">&#182;</a></h2><p><strong>Winner</strong>: Brazil</p>
+<h2 id="Final-Predictions:"><strong>Final Predictions:</strong><a class="anchor-link" href="#Final-Predictions:">&#182;</a></h2><p><strong>Winner</strong>: Germany</p>
 <p><strong>2nd Place</strong>: Spain</p>
 <p><strong>3rd Place</strong>: France</p>
-<p><strong>Final Score</strong>: Brazil VS Spain: 2-1</p>
-<p><strong>Third place playoff score</strong>: France vs Belgium: 1-1 (France win Penalty Shootout)</p>
+<p><strong>Final Score</strong>: Germany VS Spain: 2-1</p>
+<p><strong>Third place playoff score</strong>: France vs England: 1-1 (France win Penalty Shootout)</p>
 
 </div>
 </div>
